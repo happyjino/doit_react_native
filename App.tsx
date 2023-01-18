@@ -1,39 +1,30 @@
-// ch02_4
+// ch03_1
 
 import React from 'react';
-import {SafeAreaView, Button, Alert, TextInput} from 'react-native';
-import {TouchableOpacity, TouchableHighlight, Text} from 'react-native';
+import {SafeAreaView, Text, StyleSheet} from 'react-native';
+import {MD2Colors} from 'react-native-paper';
+import Color from 'color';
 
-const onPress = () => Alert.alert('home pressed.', 'message');
+console.log(MD2Colors.blue500);
+console.log(Color(MD2Colors.blue500).alpha(0.5).lighten(0.5).string());
 
 export default function App() {
   return (
-    <SafeAreaView>
-      <Button
-        title="home1"
-        color="blue"
-        onPress={() => console.log('home pressed.')}
-      />
-      <Button
-        title="home2"
-        color="red"
-        onPress={() => Alert.alert('home pressed.', 'message')}
-      />
-      <Button title="home3" onPress={onPress} />
-      <TouchableOpacity onPress={onPress}>
-        <Text>TouchableOpacity</Text>
-      </TouchableOpacity>
-      <TouchableHighlight onPress={onPress}>
-        <Text>TouchableHighlight</Text>
-      </TouchableHighlight>
-      <Text onPress={onPress}>Press Me</Text>
-      <TextInput
-        placeholder="enter your name"
-        onChangeText={(text: string) => console.log(text)}
-        onFocus={() => console.log('onFocus')}
-        onBlur={() => console.log('onBlur')}
-        onEndEditing={() => console.log('onEndEditing')}
-      />
+    <SafeAreaView style={styles.safeAreaView}>
+      <Text style={[{color: 'white'}]}>Hello StyleSheet World!</Text>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: MD2Colors.blue500,
+  },
+  text: {
+    fontSize: 20,
+    color: Color(MD2Colors.blue500).alpha(0.7).lighten(0.9).string(),
+  },
+});
