@@ -1,20 +1,39 @@
-import React from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
-import ArrowComponent from './src/screens/ArrowComponent';
-import ClassComponent from './src/screens/ClassComponent';
-import Person from './src/screens/Person';
-import * as D from './src/data';
+// ch02_4
 
-const person = D.createRandomPerson();
-const people = D.makeArray(100).map(D.createRandomPerson);
+import React from 'react';
+import {SafeAreaView, Button, Alert, TextInput} from 'react-native';
+import {TouchableOpacity, TouchableHighlight, Text} from 'react-native';
+
+const onPress = () => Alert.alert('home pressed.', 'message');
 
 export default function App() {
-  const children = people.map(person => (
-    <Person key={person.id} person={person} />
-  ));
   return (
     <SafeAreaView>
-      <ScrollView>{children}</ScrollView>
+      <Button
+        title="home1"
+        color="blue"
+        onPress={() => console.log('home pressed.')}
+      />
+      <Button
+        title="home2"
+        color="red"
+        onPress={() => Alert.alert('home pressed.', 'message')}
+      />
+      <Button title="home3" onPress={onPress} />
+      <TouchableOpacity onPress={onPress}>
+        <Text>TouchableOpacity</Text>
+      </TouchableOpacity>
+      <TouchableHighlight onPress={onPress}>
+        <Text>TouchableHighlight</Text>
+      </TouchableHighlight>
+      <Text onPress={onPress}>Press Me</Text>
+      <TextInput
+        placeholder="enter your name"
+        onChangeText={(text: string) => console.log(text)}
+        onFocus={() => console.log('onFocus')}
+        onBlur={() => console.log('onBlur')}
+        onEndEditing={() => console.log('onEndEditing')}
+      />
     </SafeAreaView>
   );
 }
