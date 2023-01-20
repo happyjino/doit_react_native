@@ -14,6 +14,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-ch02_2-ch02_2Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-ch02_2-ch02_2Tests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		64ADD01AAC844225883C89DC /* DancingScript-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3348E2D41D444393B9C915B1 /* DancingScript-Bold.ttf */; };
+		46D9A0AF0F8F469499854FD2 /* DancingScript-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7B45168598A46A5A103487B /* DancingScript-Medium.ttf */; };
+		B0826AEEC0F448B4BD0D62C9 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC6410E214DB40CD8B51D161 /* DancingScript-Regular.ttf */; };
+		EB9AB82613594839A53614EA /* DancingScript-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1690F93011ED4664BB6D18F6 /* DancingScript-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ch02_2/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ch02_2-ch02_2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ch02_2-ch02_2Tests.release.xcconfig"; path = "Target Support Files/Pods-ch02_2-ch02_2Tests/Pods-ch02_2-ch02_2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		3348E2D41D444393B9C915B1 /* DancingScript-Bold.ttf */ = {isa = PBXFileReference; name = "DancingScript-Bold.ttf"; path = "../src/assets/fonts/DancingScript-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D7B45168598A46A5A103487B /* DancingScript-Medium.ttf */ = {isa = PBXFileReference; name = "DancingScript-Medium.ttf"; path = "../src/assets/fonts/DancingScript-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DC6410E214DB40CD8B51D161 /* DancingScript-Regular.ttf */ = {isa = PBXFileReference; name = "DancingScript-Regular.ttf"; path = "../src/assets/fonts/DancingScript-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1690F93011ED4664BB6D18F6 /* DancingScript-SemiBold.ttf */ = {isa = PBXFileReference; name = "DancingScript-SemiBold.ttf"; path = "../src/assets/fonts/DancingScript-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +130,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				17E4801844E04331BDB2A3D8 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +156,18 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		17E4801844E04331BDB2A3D8 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				3348E2D41D444393B9C915B1 /* DancingScript-Bold.ttf */,
+				D7B45168598A46A5A103487B /* DancingScript-Medium.ttf */,
+				DC6410E214DB40CD8B51D161 /* DancingScript-Regular.ttf */,
+				1690F93011ED4664BB6D18F6 /* DancingScript-SemiBold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -244,6 +265,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				64ADD01AAC844225883C89DC /* DancingScript-Bold.ttf in Resources */,
+				46D9A0AF0F8F469499854FD2 /* DancingScript-Medium.ttf in Resources */,
+				B0826AEEC0F448B4BD0D62C9 /* DancingScript-Regular.ttf in Resources */,
+				EB9AB82613594839A53614EA /* DancingScript-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
