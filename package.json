@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "color": "^4.2.3",
+    "moment": "^2.29.4",
+    "moment-with-locales-es6": "^1.0.1",
     "react": "18.2.0",
     "react-native": "0.71.0",
     "react-native-paper": "^5.1.3",

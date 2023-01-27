@@ -1,37 +1,27 @@
-// ch03_4
-
+// ch03_5
 import React from 'react';
-// prettier-ignore
-import { SafeAreaView, StyleSheet, View, Alert, Platform } from 'react-native';
+import {SafeAreaView, StyleSheet, FlatList, View} from 'react-native';
 import {MD2Colors} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import color from 'color';
+import Person from './src/copy/Person';
+import * as D from './src/data';
 
-import TopBar from './src/screens/TopBar';
-import Content from './src/screens/Content';
-import BottomBar from './src/screens/BottomBar';
+const people: D.IPerson[] = D.makeArray(10).map(D.createRandomPerson);
 
+// prettier-ignore
 export default function App() {
   return (
     <SafeAreaView style={styles.flex}>
-      <TopBar />
-      <Content />
-      <BottomBar />
-      <View style={[styles.absoluteView]}>
-        <Icon name="feather" size={50} color="white" />
-      </View>
+      <FlatList data={people}
+        renderItem={({ item }) => <Person person={item} />}
+        keyExtractor={(item, index) => item.id}
+        ItemSeparatorComponent={() => <View style={styles.itemSeparator} />} />
     </SafeAreaView>
-  );
+  )
 }
 
 // prettier-ignore
 const styles = StyleSheet.create({
-  flex: { flex: 1, backgroundColor: MD2Colors.lightBlue100 },
-  absoluteView: {
-    backgroundColor: MD2Colors.purple900,
-    position: 'absolute',
-    right: 30,
-    bottom: Platform.select({ ios: 100, android: 80 }),
-    padding: 10,
-    borderRadius: 35
-  }
-});
+  flex: { flex: 1 },
+  itemSeparator: { borderWidth: 1, borderColor: color(MD2Colors.grey500).lighten(0.3).string() }
+})
