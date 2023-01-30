@@ -1,27 +1,26 @@
-// ch03_5
-import React from 'react';
-import {SafeAreaView, StyleSheet, FlatList, View} from 'react-native';
-import {MD2Colors} from 'react-native-paper';
-import color from 'color';
-import Person from './src/copy/Person';
-import * as D from './src/data';
-
-const people: D.IPerson[] = D.makeArray(10).map(D.createRandomPerson);
+// ch04_1
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {useClock} from './src/hooks';
 
 // prettier-ignore
 export default function App() {
+  
+  const time = useClock();
+
   return (
-    <SafeAreaView style={styles.flex}>
-      <FlatList data={people}
-        renderItem={({ item }) => <Person person={item} />}
-        keyExtractor={(item, index) => item.id}
-        ItemSeparatorComponent={() => <View style={styles.itemSeparator} />} />
+    <SafeAreaView style={styles.safeAreaView}>
+      <Text style={[styles.digitFont, styles.time]}>
+        {time.toLocaleTimeString()}
+      </Text>
+      <Text style={styles.digitFont}>{time.toLocaleDateString()}</Text>
     </SafeAreaView>
   )
 }
 
 // prettier-ignore
 const styles = StyleSheet.create({
-  flex: { flex: 1 },
-  itemSeparator: { borderWidth: 1, borderColor: color(MD2Colors.grey500).lighten(0.3).string() }
+  safeAreaView: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  digitFont: { fontFamily: 'MajorMonoDisplay-Regular', fontWeight: '400' },
+  time: { fontSize: 40 }
 })

@@ -16,6 +16,14 @@
     {
       "path": "src/assets/fonts/DancingScript-SemiBold.ttf",
       "sha1": "b5e71ddbaca9b4d5953f0c5e45bf326fb7df35ba"
+    },
+    {
+      "path": "src/assets/fonts/MajorMonoDisplay-Regular.ttf",
+      "sha1": "6cd7e5ff1b9865efff78dfb6ba31182a358b5503"
+    },
+    {
+      "path": "src/assets/fonts/NanumPenScript-Regular.ttf",
+      "sha1": "b04563a07506b5f8d7c9a2f6392474a6b5a98e74"
     }
   ]
 }
