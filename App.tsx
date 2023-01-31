@@ -1,26 +1,28 @@
-// ch04_1
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
-import {useClock} from './src/hooks';
+// ch04_2
+import React from 'react';
+import {SafeAreaView, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import Cache from './src/screens/Cache';
+import Memo from './src/screens/Memo';
+import Fibo from './src/screens/Fibo';
+
+const {width} = Dimensions.get('window');
+const numberOfComponents = 3;
 
 // prettier-ignore
 export default function App() {
-  
-  const time = useClock();
-
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <Text style={[styles.digitFont, styles.time]}>
-        {time.toLocaleTimeString()}
-      </Text>
-      <Text style={styles.digitFont}>{time.toLocaleDateString()}</Text>
+    <SafeAreaView>
+      <ScrollView horizontal contentContainerStyle={[styles.contentContainerStyle]}>
+        <Cache />
+        <Memo />
+        <Fibo />
+      </ScrollView>
     </SafeAreaView>
   )
 }
 
 // prettier-ignore
 const styles = StyleSheet.create({
-  safeAreaView: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  digitFont: { fontFamily: 'MajorMonoDisplay-Regular', fontWeight: '400' },
-  time: { fontSize: 40 }
+  safeAreaView: { flex: 1},
+  contentContainerStyle: {width: width * numberOfComponents}
 })
