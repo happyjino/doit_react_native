@@ -14,11 +14,39 @@ export type PersonProps = {
   person: D.IPerson;
 };
 
-const Person: FC<PersonProps> = ({person}) => {
+const Person: FC<PersonProps> = ({person: initialPerson}) => {
   const avatarPressed = useCallback(() => Alert.alert('avatar pressed'), []);
   const deletePressed = useCallback(() => Alert.alert('delete pressed'), []);
-  const countIconPressed = useCallback(
-    (name: string) => () => Alert.alert(`${name} pressed`),
+
+  const [person, setPerson] = useState<D.IPerson>({
+    ...initialPerson,
+    counts: {comment: 0, retweet: 0, heart: 0},
+  });
+
+  const commentIconPressed = useCallback(
+    () =>
+      setPerson(person => ({
+        ...person,
+        counts: {...person.counts, comment: person.counts.comment + 1},
+      })),
+    [],
+  );
+
+  const retweetIconPressed = useCallback(
+    () =>
+      setPerson(person => ({
+        ...person,
+        counts: {...person.counts, retweet: person.counts.retweet + 1},
+      })),
+    [],
+  );
+
+  const heartIconPressed = useCallback(
+    () =>
+      setPerson(person => ({
+        ...person,
+        counts: {...person.counts, heart: person.counts.heart + 1},
+      })),
     [],
   );
 
@@ -56,7 +84,7 @@ const Person: FC<PersonProps> = ({person}) => {
         <View style={[styles.countsView]}>
           <IconText
             viewStyle={[styles.touchableIcon]}
-            onPress={countIconPressed('comment')}
+            onPress={commentIconPressed}
             name="comment"
             size={24}
             color={MD2Colors.blue500}
@@ -65,7 +93,7 @@ const Person: FC<PersonProps> = ({person}) => {
           />
           <IconText
             viewStyle={[styles.touchableIcon]}
-            onPress={countIconPressed('retweet')}
+            onPress={retweetIconPressed}
             name="share"
             size={24}
             color={MD2Colors.purple500}
@@ -74,7 +102,7 @@ const Person: FC<PersonProps> = ({person}) => {
           />
           <IconText
             viewStyle={[styles.touchableIcon]}
-            onPress={countIconPressed('heart')}
+            onPress={heartIconPressed}
             name="heart"
             size={24}
             color={MD2Colors.red500}

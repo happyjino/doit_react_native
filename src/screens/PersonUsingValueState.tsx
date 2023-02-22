@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import type {FC} from 'react';
 import {View, Image, Text, Alert} from 'react-native';
 import {MD2Colors} from 'react-native-paper';
@@ -17,10 +17,20 @@ export type PersonProps = {
 const Person: FC<PersonProps> = ({person}) => {
   const avatarPressed = useCallback(() => Alert.alert('avatar pressed'), []);
   const deletePressed = useCallback(() => Alert.alert('delete pressed'), []);
-  const countIconPressed = useCallback(
-    (name: string) => () => Alert.alert(`${name} pressed`),
+
+  const [comment, setComment] = useState<number>(0);
+  const [retweet, setRetweet] = useState<number>(0);
+  const [heart, setHeart] = useState<number>(0);
+
+  const commentPressed = useCallback(
+    () => setComment(comment => comment + 1),
     [],
   );
+  const retweetPressed = useCallback(
+    () => setRetweet(retweet => retweet + 1),
+    [],
+  );
+  const heartPressed = useCallback(() => setHeart(heart => heart + 1), []);
 
   return (
     <View style={[styles.view]}>
@@ -56,30 +66,30 @@ const Person: FC<PersonProps> = ({person}) => {
         <View style={[styles.countsView]}>
           <IconText
             viewStyle={[styles.touchableIcon]}
-            onPress={countIconPressed('comment')}
+            onPress={commentPressed}
             name="comment"
             size={24}
             color={MD2Colors.blue500}
             textStyle={[styles.iconText]}
-            text={person.counts.comment}
+            text={comment}
           />
           <IconText
             viewStyle={[styles.touchableIcon]}
-            onPress={countIconPressed('retweet')}
+            onPress={retweetPressed}
             name="share"
             size={24}
             color={MD2Colors.purple500}
             textStyle={[styles.iconText]}
-            text={person.counts.retweet}
+            text={retweet}
           />
           <IconText
             viewStyle={[styles.touchableIcon]}
-            onPress={countIconPressed('heart')}
+            onPress={heartPressed}
             name="heart"
             size={24}
             color={MD2Colors.red500}
             textStyle={[styles.iconText]}
-            text={person.counts.heart}
+            text={heart}
           />
         </View>
       </View>
