@@ -1,59 +1,43 @@
-// ch04_3
-import React, {useMemo, useState} from 'react';
+// ch04_4
+import React, {useMemo, useState, useCallback} from 'react';
 import type {FC} from 'react';
 // prettier-ignore
-import {SafeAreaView, StyleSheet, FlatList, View, ScrollView, Dimensions, Text} from 'react-native';
+import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
 import {MD2Colors} from 'react-native-paper';
-import PersonUsingValueState from './src/screens/PersonUsingValueState';
-import PersonUsingObjectState from './src/screens/PersonUsingObjectState';
-import PersonUsingPassingState from './src/screens/PersonUsingPassingState';
-import * as D from './src/data';
-import TopBar from './src/screens/TopBar';
-
-const {width} = Dimensions.get('window');
-
-type PersonInformation = {
-  title: string;
-  Component: FC<any>;
-};
-
-const personInformations: PersonInformation[] = [
-  {title: 'PersonUsingValueState', Component: PersonUsingValueState},
-  {title: 'PersonUsingObjectState', Component: PersonUsingObjectState},
-  {title: 'PersonUsingPassingState', Component: PersonUsingPassingState},
-];
-
-const numberOfComponents = personInformations.length;
+import LifeCycle from './src/screens/LifeCycle';
+import Timer from './src/screens/Timer';
+import Interval from './src/screens/Interval';
+import Fetch from './src/screens/Fetch';
 
 // prettier-ignore
 export default function App() {
-  // const people = useMemo(() => D.makeArray(10).map(D.createRandomPerson), []);
-  const [people, setPeople] = useState<D.IPerson[]>([])
-  const children = useMemo(() => personInformations.map(({ title, Component }: PersonInformation) => (
-    <View style={{ flex: 1 }} key={title}>
-      <Text style={[styles.text]}>{title}</Text>
-      <FlatList data={people}
-        renderItem={({ item }) => <Component person={item} />}
-        keyExtractor={(item, index) => item.id}
-        ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
-      />
-    </View>
-  )), [people.length])
-
+  const selects = useMemo(() => ['lifeCycle', 'timer', 'interval', 'fetch'], []);
+  const [select, setSelect] = useState<string>(selects[0]);
+  const onPress = useCallback((text) => () => setSelect(text), []);
+  const buttons = useMemo(() => 
+    selects.map((text) => (
+      <Text key={text} onPress={onPress(text)} style={styles.button}>
+        {text}
+      </Text>
+    )), [])
+  
   return (
-    <SafeAreaView>
-      <TopBar setPeople={setPeople} />
-      <ScrollView horizontal contentContainerStyle={[styles.horizontalScrollView]}>
-        {children}
-      </ScrollView>
+    <SafeAreaView style={styles.safeAreaView}>
+      <View style={styles.topBar}>{buttons}</View>
+      {select == 'lifeCycle' && <LifeCycle />}
+      {select == 'timer' && <Timer />}
+      {select == 'interval' && <Interval />}
+      {select == 'fetch' && <Fetch />}
     </SafeAreaView>
-  )
+  );
 }
 
 // prettier-ignore
 const styles = StyleSheet.create({
   safeAreaView: { flex: 1 },
-  itemSeparator: { borderWidth: 1, borderColor: MD2Colors.grey500 },
-  horizontalScrollView: { width: width * numberOfComponents },
-  text: { fontSize: 24, textAlign: 'center' }
+  topBar: {
+    flexDirection: 'row', flexWrap: 'wrap', padding: 5,
+    justifyContent: 'space-between', backgroundColor: MD2Colors.lightBlue500
+  },
+  button: { fontSize: 20, color: 'white' }
 });
