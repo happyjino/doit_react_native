@@ -1,16 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import {StyleSheet, View, Text, FlatList} from 'react-native';
 import { MD2Colors } from 'react-native-paper';
 import Country from './Country';
 import * as D from '../data';
+import { useAsync } from '../hooks';
 
 export default function Fetch() {
   const [countries, setCountries] = useState<D.ICountry[]>([]);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    D.getCountries().then(setCountries).catch(setError);
-  }, []);
+  const [error, resetError] = useAsync(async () => {
+    setCountries([]);
+    resetError();
+    // await Promise.reject(new Error('some error occurs'));
+    const countries = await D.getCountries();
+    setCountries(countries);
+  })
 
   return (
     <View style={styles.view}> 
