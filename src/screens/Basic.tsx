@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, View, Text, Switch, FlatList } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useToggleTheme } from '../contexts';
@@ -10,37 +10,34 @@ export default function People() {
   const theme = useTheme();
   const toggleTheme = useToggleTheme();
   
-  const add = useCallback(() => {
-    setPeople((people) => [...people, D.createRandomPerson()])
+  const addPerson = useCallback(() => {
+    setPeople((people) => [D.createRandomPerson(), ...people])
   }, []);
 
-  const removeAll = useCallback(() => {
+  const removeAllPersons = useCallback(() => {
     setPeople((notUsed) => [])
   }, []);
 
-  const flatListRef = useRef<FlatList | null>(null);
-  const onContentSizeChange = useCallback(
-    () => flatListRef.current?.scrollToEnd(), [flatListRef.current]
-  );
+  const deletePerson = useCallback((id: string) => () => setPeople((people) => people.filter((person) => person.id != id)), [])
+
+  useEffect(addPerson, []);
 
   return (
     <View style={[styles.view, { backgroundColor: theme.colors.surface }]}>
       <View style={[styles.topBar, { backgroundColor: theme.colors.secondary }]}>
-        <Text onPress={add} style={styles.text}>
+        <Text onPress={addPerson} style={styles.text}>
           add
         </Text>
-        <Text onPress={removeAll} style={styles.text}>
+        <Text onPress={removeAllPersons} style={styles.text}>
           remove all
         </Text>
         <View style={{ flex: 1 }} />
         <Switch value={theme.dark} onValueChange={toggleTheme} />
       </View>
       <FlatList
-        ref={flatListRef}
         data={people}
-        renderItem={({ item }) => <Person person={item} />}
+        renderItem={({ item }) => <Person person={item} deletePressed={deletePerson(item.id)} />}
         keyExtractor={(item) => item.id}
-        onContentSizeChange={onContentSizeChange}
       />
     </View>
   )
