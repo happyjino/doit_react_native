@@ -50,7 +50,7 @@ const Person: FC<PersonProps> = ({person, deletePressed}) => {
         <Image style={[styles.image]} source={{uri: person.image}} />
         <View style={[styles.countsView]}>
           <Icon name="comment" size={24} color={MD2Colors.blue500} />
-          <Icon name="twitter-retweet" size={24} color={MD2Colors.purple500} />
+          <Icon name="youtube-tv" size={24} color={MD2Colors.purple500} />
           <Icon name="heart" size={24} color={MD2Colors.red500} />
         </View>
       </View>

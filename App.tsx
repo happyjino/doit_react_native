@@ -1,4 +1,4 @@
-// ch06_1
+// ch06_2
 import React, {useState, useCallback} from 'react';
 import { SafeAreaView, StyleSheet, useColorScheme } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
