@@ -7,6 +7,7 @@ export * from './useAsync';
 
 // animation
 export * from './useAnimatedValue';
+export * from './useAnimatedValues';
 export * from './useMonitorAnimatedValue';
 export * from './useStyle';
 export * from './useTransformStyle';
