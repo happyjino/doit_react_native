@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
 import { BottomNavigation } from 'react-native-paper';
-import Sequence from './Sequence'
-import Parallel from './Parallel'
-import Stagger from './Stagger'
-import EnterExit from './EnterExit'
+import PanRes from './PanRes'
+import Drag from './Drag'
+import LeftSwipe from './LeftSwipe'
 
 export default function MainNavigator() {
   const [index, setIndex] = useState<number>(0);
   const [routes] = useState([
-    { key: 'sequence', title: 'Sequence', icon: 'view-sequential' },
-    { key: 'parallel', title: 'Parallel', icon: 'view-parallel' },
-    { key: 'stagger', title: 'Stagger', icon: 'arrange-send-backwward' },
-    { key: 'enterExit', title: 'EnterExit', icon: 'location-enter' },
+    {key: 'panRes', title: 'PanRes', icon: 'drag'},
+    {key: 'drag', title: 'Drag', icon: 'drag-horizontal'},
+    {key: 'leftSwipe', title: 'LeftSwipe', icon: 'arrow-expand-right'},
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    sequence: Sequence,
-    parallel: Parallel,
-    stagger: Stagger,
-    enterExit: EnterExit
+    panRes: PanRes,
+    drag: Drag,
+    leftSwipe: LeftSwipe
   });
 
   return (

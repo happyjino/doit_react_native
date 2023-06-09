@@ -11,3 +11,6 @@ export * from './useAnimatedValues';
 export * from './useMonitorAnimatedValue';
 export * from './useStyle';
 export * from './useTransformStyle';
+export * from './usePanResponder';
+export * from './useAnimatedValueXY';
+export * from './useMonitorAnimatedValueXY'
