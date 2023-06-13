@@ -1,21 +1,20 @@
-import React, {useCallback, useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState } from 'react';
 import type {FC} from 'react';
-import {View, Image, Text, Alert, Animated, Easing } from 'react-native';
-import {MD2Colors} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Image } from 'react-native';
+import { MD2Colors } from 'react-native-paper';
+import { View, Text, UnderlineText, TouchableView, MaterialCommunityIcon as Icon } from '../theme/navigation'
 import moment from 'moment-with-locales-es6';
 import * as D from '../data';
 import {styles} from './Person.style';
 import { Avatar } from '../components';
-import { useToggle } from '../hooks';
 
 export type PersonProps = {
   person: D.IPerson;
   deletePressed: () => void;
 };
 
-const Person: FC<PersonProps> = ({person, deletePressed}) => {
-  const avatarPressed = useCallback(() => Alert.alert('avatar pressed'), []);
+const Person: FC<PersonProps> = ({ person: initialPerson, deletePressed }) => {
+  const [person, setPerson] = useState<D.IPerson>(initialPerson)
 
   return (
     <View style={[styles.view]}>
@@ -24,19 +23,18 @@ const Person: FC<PersonProps> = ({person, deletePressed}) => {
           imageStyle={[styles.avatar]}
           uri={person.avatar}
           size={50}
-          onPress={avatarPressed}
         />
       </View>
       <View style={[styles.rightView]}>
         <Text style={[styles.name]}>{person.name}</Text>
-        <Text style={[styles.email]}>{person.email}</Text>
+        <UnderlineText style={[styles.email]}>{person.email}</UnderlineText>
         <View style={[styles.dateView]}>
           <Text style={[styles.text]}>
             {moment(person.createdDate).startOf('day').fromNow()}
           </Text>
           <Icon
-            name="trash-can-outline"
-            size={26}
+            name="trash-can"
+            size={30}
             color={MD2Colors.lightBlue500}
             onPress={deletePressed}
           />
@@ -49,9 +47,18 @@ const Person: FC<PersonProps> = ({person, deletePressed}) => {
         </Text>
         <Image style={[styles.image]} source={{uri: person.image}} />
         <View style={[styles.countsView]}>
-          <Icon name="comment" size={24} color={MD2Colors.blue500} />
-          <Icon name="youtube-tv" size={24} color={MD2Colors.purple500} />
-          <Icon name="heart" size={24} color={MD2Colors.red500} />
+          <TouchableView style={[styles.countView]}>
+            <Icon name="comment" size={24} color={MD2Colors.blue500} />
+            <Text>{person.counts.comment}</Text>
+          </TouchableView>
+          <TouchableView style={[styles.countView]}>
+            <Icon name="youtube-tv" size={24} color={MD2Colors.purple500} />
+            <Text>{person.counts.retweet}</Text>
+          </TouchableView>
+          <TouchableView style={[styles.countView]}>
+            <Icon name="heart" size={24} color={MD2Colors.red500} />
+            <Text>{person.counts.heart}</Text>
+          </TouchableView>
         </View>
       </View>
     </View>

@@ -1,27 +1,37 @@
-// ch06_4
+// ch07_1
+import 'react-native-gesture-handler'
 import React, {useState, useCallback} from 'react';
-import { SafeAreaView, StyleSheet, useColorScheme } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
-import { DefaultTheme, MD3DarkTheme } from 'react-native-paper';
+import { enableScreens } from 'react-native-screens'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native'
+import { ToggleThemeProvider } from './src/contexts'
 import MainNavigator from './src/screens/MainNavigator';
-import { ToggleThemeProvider } from './src/contexts';
+// import { useColorScheme, AppearanceProvider } from 'react-native-appearance';
+import { Provider as PaperProvider, useTheme } from 'react-native-paper';
+
+
+enableScreens()
 
 export default function App() {
-  const scheme = useColorScheme();
-  const [theme, setTheme] = useState(scheme == 'dark' ? MD3DarkTheme : DefaultTheme)
-  const toggleTheme = useCallback(() => setTheme((theme) => (theme.dark ? DefaultTheme : MD3DarkTheme)), [])
+  const scheme = useTheme();
+  const [theme, setTheme] = useState(
+    scheme.dark ? DarkTheme : DefaultTheme
+  )
+
+  const toggleTheme = useCallback(() => 
+    setTheme(({ dark }) => (dark ? DefaultTheme : DarkTheme))
+  , [])
   
   return (
     <PaperProvider theme={theme}>
       <ToggleThemeProvider toggleTheme={toggleTheme}>
-        <SafeAreaView style={styles.safeAreaView}>
-          <MainNavigator />
-        </SafeAreaView>
+        <SafeAreaProvider>
+          <NavigationContainer theme={theme}>
+            <MainNavigator />
+          </NavigationContainer>
+        </SafeAreaProvider>
       </ToggleThemeProvider>
     </PaperProvider>
+    
   )
 }
-
-const styles = StyleSheet.create({
-  safeAreaView: { flex: 1 },
-});
