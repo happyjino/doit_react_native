@@ -1,43 +1,52 @@
-import React, { useMemo } from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
-import type { StackNavigationOptions } from '@react-navigation/stack'
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AntIcon from 'react-native-vector-icons/AntDesign'
+import FontawesomeIcon from 'react-native-vector-icons/FontAwesome'
+import { MD2Colors } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import Home from './Home'
-import HomeLeft from './HomeLeft'
-import HomeRight from './HomeRight'
-import { useNavigationHorizontalInterpolator } from '../hooks'
+import Login from './Login'
+import SignUp from './SignUp'
+import HomeNavigator from './HomeNavigator'
 
-const Stack = createStackNavigator()
+import type { RouteProp, ParamListBase } from '@react-navigation/native'
+type TabBarIconProps = { focused: boolean; color: string; size: number }
+
+const icons: Record<string, string[]> = {
+  HomeNavigator: ['home-circle', 'home-circle-outline'],
+  Login: ['account-search', 'account-search-outline'],
+  SignUp: ['account-clock', 'account-clock-outline']
+}
+
+
+const screenOptions = ({ route }: { route: RouteProp<ParamListBase, string> }) => {
+  return {
+    tabBarIcon: ({ focused, color, size }: TabBarIconProps) => {
+      const { name } = route
+      // switch (name) {
+      //   case 'Login':
+      //     return <AntIcon name="login" size={size} color={color} />
+      //   case 'SignUp':
+      //     return <FontawesomeIcon name="sign-in" size={size} color={color} />
+      // }
+      // return <Icon name="home" size={size} color={color} />
+      const focusedSize = focused ? size + 6 : size
+      const focusedColor = focused ? MD2Colors.lightBlue500 : color
+      const [icon, iconOutline] = icons[name]
+      const iconName = focused ? icon : iconOutline
+      return <Icon name={iconName} size={focusedSize} color={focusedColor} />
+    }
+  }
+}
+
+const Tab = createBottomTabNavigator()
 
 export default function MainNavigator() {
-
-  const interpolator = useNavigationHorizontalInterpolator()
-  const leftOptions = useMemo<StackNavigationOptions>(() => ({
-    gestureDirection: 'horizontal-inverted',
-    cardStyleInterpolator: interpolator
-  }), [])
-
-  const rightOptions = useMemo<StackNavigationOptions>(() => ({
-    gestureDirection: 'horizontal',
-    cardStyleInterpolator: interpolator
-  }), [])
-
   return (
-    <Stack.Navigator
-      screenOptions={{
-        // headerStyle: {
-        //   backgroundColor: MD2Colors.pink500
-        // },
-        // headerTintColor: 'white',
-        // headerTitleStyle: {
-        //   fontWeight: 'bold'
-        // },
-        headerShown: false
-      }}
-    >
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="HomeLeft" component={HomeLeft} options={leftOptions} />
-      <Stack.Screen name="HomeRight" component={HomeRight} options={rightOptions} />
-    </Stack.Navigator>
-  )
+    <Tab.Navigator screenOptions={screenOptions}>
+      <Tab.Screen name="Login" component={Login} />
+      <Tab.Screen name="SignUp" component={SignUp} />
+      <Tab.Screen name="HomeNavigator" component={HomeNavigator} options={{tabBarLabel: 'Home', tabBarBadge: 3}} />
+    </Tab.Navigator>
+  );
 }

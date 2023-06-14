@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView, View, UnderlineText, TopBar } from '../theme/navigation'
+import { SafeAreaView, View, UnderlineText, TopBar, NavigationHeader, MaterialCommunityIcon as Icon } from '../theme'
 import { ScrollEnabledProvider, useScrollEnabled } from '../contexts';
 import * as D from '../data';
 import Person from './Person';
@@ -13,6 +13,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 export type RootStackParamList = {
   HomeLeft: undefined
   HomeRight: { name: string, age: number } | undefined
+  Login: undefined
 }
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const goLeft = useCallback(() => navigation.navigate('HomeLeft'), []);
   const goRight = useCallback(() => navigation.navigate('HomeRight', { name: 'Jack', age: 32 }), [])
+  const logout = useCallback(() => navigation.navigate('Login'), [])
 
   const [scrollEnabled] = useScrollEnabled();
   const [people, setPeople] = useState<D.IPerson[]>([]);
@@ -47,6 +49,7 @@ export default function Home() {
     <SafeAreaView>
       <ScrollEnabledProvider>
         <View style={[styles.view]}>
+          <NavigationHeader title="Home" Right={() => <Icon name="logout" size={30} onPress={logout} />} />
           <TopBar>
             <UnderlineText onPress={goLeft} style={styles.text}>go Left</UnderlineText>
             <UnderlineText onPress={goRight} style={styles.text}>go Right</UnderlineText>
