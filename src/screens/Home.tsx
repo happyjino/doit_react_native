@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, DrawerActions } from '@react-navigation/native';
 import { SafeAreaView, View, UnderlineText, TopBar, NavigationHeader, MaterialCommunityIcon as Icon } from '../theme'
 import { ScrollEnabledProvider, useScrollEnabled } from '../contexts';
 import * as D from '../data';
@@ -21,6 +21,7 @@ export default function Home() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const goLeft = useCallback(() => navigation.navigate('HomeLeft'), []);
   const goRight = useCallback(() => navigation.navigate('HomeRight', { name: 'Jack', age: 32 }), [])
+  const open = useCallback(() => {navigation.dispatch(DrawerActions.openDrawer())}, [])
   const logout = useCallback(() => navigation.navigate('Login'), [])
 
   const [scrollEnabled] = useScrollEnabled();
@@ -49,11 +50,11 @@ export default function Home() {
     <SafeAreaView>
       <ScrollEnabledProvider>
         <View style={[styles.view]}>
-          <NavigationHeader title="Home" Right={() => <Icon name="logout" size={30} onPress={logout} />} />
-          <TopBar>
-            <UnderlineText onPress={goLeft} style={styles.text}>go Left</UnderlineText>
-            <UnderlineText onPress={goRight} style={styles.text}>go Right</UnderlineText>
-          </TopBar>
+          <NavigationHeader
+            title="Home"
+            Right={() => <Icon name="logout" size={30} onPress={logout} />}
+            Left={() => <Icon name="menu" size={30} onPress={open} />}
+          />
           <TopBar noSwitch>
             <UnderlineText onPress={addPerson} style={styles.text}>add</UnderlineText>
             <UnderlineText onPress={removeAllPersons} style={styles.text}>remove all</UnderlineText>

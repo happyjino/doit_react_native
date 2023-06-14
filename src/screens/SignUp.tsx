@@ -8,7 +8,7 @@ import { useAutoFocus, AutoFocusProvider } from '../contexts';
 import { StackNavigationProp } from '@react-navigation/stack'
 
 export type RootStackParamList = {
-  HomeNavigator: undefined
+  TabNavigator: undefined
   Login: undefined
 }
 
@@ -21,7 +21,7 @@ export default function SignUp() {
   const focus = useAutoFocus()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const goHomeNavigator = useCallback(() => {
-    if (password === confirmPassword) navigation.navigate('HomeNavigator')
+    if (password === confirmPassword) navigation.navigate('TabNavigator')
     else Alert.alert('password is invalid')
     
   }, [password, confirmPassword])

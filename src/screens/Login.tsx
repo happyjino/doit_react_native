@@ -8,7 +8,7 @@ import { useAutoFocus, AutoFocusProvider } from '../contexts';
 import { StackNavigationProp } from '@react-navigation/stack'
 
 export type RootStackParamList = {
-  HomeNavigator: undefined
+  TabNavigator: undefined
   SignUp: undefined
 }
 
@@ -18,7 +18,7 @@ export default function Login() {
   const [password, setPassword] = useState<string>(D.random(10000, 1000000).toString())
   const focus = useAutoFocus()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const goHomeNavigator = useCallback(() => navigation.navigate('HomeNavigator'), [])
+  const goHomeNavigator = useCallback(() => navigation.navigate('TabNavigator'), [])
   const goSignUp = useCallback(() => navigation.navigate('SignUp'), [])
 
   return (
