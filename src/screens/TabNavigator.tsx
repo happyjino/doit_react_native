@@ -22,7 +22,8 @@ const screenOptions = ({ route }: { route: RouteProp<ParamListBase, string> }) =
       const [icon, iconOutline] = icons[name]
       const iconName = focused ? icon : iconOutline
       return <Icon name={iconName} size={focusedSize} color={focusedColor} />
-    }
+    },
+    headerShown: false
   }
 }
 

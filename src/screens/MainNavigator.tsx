@@ -8,7 +8,7 @@ const Drawer = createDrawerNavigator()
 
 export default function CopyMe() {
   return (
-    <Drawer.Navigator drawerContent={DrawerContent}>
+    <Drawer.Navigator drawerContent={DrawerContent} screenOptions={{headerShown: false}}>
       <Drawer.Screen name="Login" component={Login} />
       <Drawer.Screen name="SignUp" component={SignUp} />
       <Drawer.Screen name="TabNavigator" component={TabNavigator} options={{ title: 'Home' }} />

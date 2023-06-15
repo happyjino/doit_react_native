@@ -1,9 +1,11 @@
 import React, {useState, useCallback} from 'react';
 import { StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
 import { SafeAreaView, View, Text, TextInput, TouchableView, UnderlineText } from '../theme'
 import * as D from '../data'
 import { useAutoFocus, AutoFocusProvider } from '../contexts';
+import { loginAction } from '../store'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 
@@ -13,18 +15,22 @@ export type RootStackParamList = {
 }
 
 export default function SignUp() {
-
-  const [person, setPerson] = useState<D.IPerson>(D.createRandomPerson())
+  const [email, setEmail] = useState<string>(D.randomEmail())
+  const [name, setName] = useState<string>(D.randomName())
   const [password, setPassword] = useState<string>('1')
   const [confirmPassword, setConfirmPassword] = useState<string>(password)
 
   const focus = useAutoFocus()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const goHomeNavigator = useCallback(() => {
-    if (password === confirmPassword) navigation.navigate('TabNavigator')
+  const dispatch = useDispatch()
+  const goTabNavigator = useCallback(() => {
+    if (password === confirmPassword) {
+      dispatch(loginAction({name, email, password}))
+      navigation.navigate('TabNavigator')
+    }
     else Alert.alert('password is invalid')
     
-  }, [password, confirmPassword])
+  }, [name, email, password, confirmPassword])
   const goLogin = useCallback(() => navigation.navigate('Login'), [])
 
   return (
@@ -37,8 +43,8 @@ export default function SignUp() {
               <TextInput
                 onFocus={focus}
                 style={[styles.textInput]}
-                value={person.email}
-                onChangeText={(email) => setPerson((person) => ({ ...person, email }))}
+                value={email}
+                onChangeText={setEmail}
                 placeholder="enter your email" />
             </View>
           </View>
@@ -48,8 +54,8 @@ export default function SignUp() {
               <TextInput
                 onFocus={focus}
                 style={[styles.textInput]}
-                value={person.name}
-                onChangeText={(name) => setPerson((person) => ({...person, name}))}
+                value={name}
+                onChangeText={setName}
                 placeholder="enter your name" />
             </View>
           </View>
@@ -75,7 +81,7 @@ export default function SignUp() {
                 placeholder="confirm password" />
             </View>
           </View>
-          <TouchableView notification style={[styles.touchableView]} onPress={goHomeNavigator}>
+          <TouchableView notification style={[styles.touchableView]} onPress={goTabNavigator}>
             <Text style={[styles.text]}>SignUp</Text>
           </TouchableView>
           <UnderlineText style={[styles.text, { marginTop: 15 }]} onPress={goLogin}>Login</UnderlineText>

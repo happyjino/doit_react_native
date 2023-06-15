@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView, View, Text, TextInput, TouchableView, UnderlineText } from '../theme'
 import * as D from '../data'
 import { useAutoFocus, AutoFocusProvider } from '../contexts';
+import { useDispatch } from 'react-redux'
+import { loginAction } from '../store'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 
@@ -13,12 +15,17 @@ export type RootStackParamList = {
 }
 
 export default function Login() {
-
-  const [person, setPerson] = useState<D.IPerson>(D.createRandomPerson())
+  const [email, setEmail] = useState<string>(D.randomEmail())
+  const [name, setName] = useState<string>(D.randomName())
   const [password, setPassword] = useState<string>(D.random(10000, 1000000).toString())
+  
   const focus = useAutoFocus()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
-  const goHomeNavigator = useCallback(() => navigation.navigate('TabNavigator'), [])
+  const dispatch = useDispatch()
+  const goTabNavigator = useCallback(() => {
+    dispatch(loginAction({ email, name, password }))
+    navigation.navigate('TabNavigator')
+  }, [email, password])
   const goSignUp = useCallback(() => navigation.navigate('SignUp'), [])
 
   return (
@@ -31,8 +38,8 @@ export default function Login() {
               <TextInput
                 onFocus={focus}
                 style={[styles.textInput]}
-                value={person.email}
-                onChangeText={(email) => setPerson((person) => ({ ...person, email }))}
+                value={email}
+                onChangeText={setEmail}
                 placeholder="enter your email" />
             </View>
           </View>
@@ -48,7 +55,7 @@ export default function Login() {
                 placeholder="enter your password" />
             </View>
           </View>
-          <TouchableView notification style={[styles.touchableView]} onPress={goHomeNavigator}>
+          <TouchableView notification style={[styles.touchableView]} onPress={goTabNavigator}>
             <Text style={[styles.text]}>Login</Text>
           </TouchableView>
           <UnderlineText style={[styles.text, { marginTop: 15 }]} onPress={goSignUp}>SignUp</UnderlineText>

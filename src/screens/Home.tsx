@@ -8,6 +8,9 @@ import Person from './Person';
 import { LeftRightNavigation } from '../components';
 import type { LeftRightNavigationMethods } from '../components';
 
+import { useDispatch } from 'react-redux'
+import { logoutAction } from '../store'
+
 import { StackNavigationProp } from '@react-navigation/stack'
 
 export type RootStackParamList = {
@@ -19,10 +22,14 @@ export type RootStackParamList = {
 export default function Home() {
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
+  const dispatch = useDispatch()
   const goLeft = useCallback(() => navigation.navigate('HomeLeft'), []);
   const goRight = useCallback(() => navigation.navigate('HomeRight', { name: 'Jack', age: 32 }), [])
   const open = useCallback(() => {navigation.dispatch(DrawerActions.openDrawer())}, [])
-  const logout = useCallback(() => navigation.navigate('Login'), [])
+  const logout = useCallback(() => {
+    dispatch(logoutAction())
+    navigation.navigate('Login')
+  }, [])
 
   const [scrollEnabled] = useScrollEnabled();
   const [people, setPeople] = useState<D.IPerson[]>([]);
