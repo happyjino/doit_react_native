@@ -9,7 +9,7 @@ import { LeftRightNavigation } from '../components';
 import type { LeftRightNavigationMethods } from '../components';
 
 import { useDispatch } from 'react-redux'
-import { logoutAction } from '../store'
+import * as L from '../store/login'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 
@@ -27,7 +27,7 @@ export default function Home() {
   const goRight = useCallback(() => navigation.navigate('HomeRight', { name: 'Jack', age: 32 }), [])
   const open = useCallback(() => {navigation.dispatch(DrawerActions.openDrawer())}, [])
   const logout = useCallback(() => {
-    dispatch(logoutAction())
+    dispatch(L.logoutAction())
     navigation.navigate('Login')
   }, [])
 

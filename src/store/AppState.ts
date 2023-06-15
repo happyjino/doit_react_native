@@ -1,10 +1,12 @@
-export type User = {
-  name: string
-  email: string
-  password: string
-}
+import * as L from './login'
+import * as C from './counter'
+import * as CL from './clock'
+import * as P from './people'
+
 
 export type AppState = {
-  loggedIn: boolean
-  loggedUser: User
+  login: L.State
+  counter: C.State
+  clock: CL.State
+  people: P.State
 }

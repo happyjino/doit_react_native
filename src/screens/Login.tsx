@@ -5,7 +5,7 @@ import { SafeAreaView, View, Text, TextInput, TouchableView, UnderlineText } fro
 import * as D from '../data'
 import { useAutoFocus, AutoFocusProvider } from '../contexts';
 import { useDispatch } from 'react-redux'
-import { loginAction } from '../store'
+import * as L from '../store/login'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 
@@ -23,7 +23,7 @@ export default function Login() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
   const dispatch = useDispatch()
   const goTabNavigator = useCallback(() => {
-    dispatch(loginAction({ email, name, password }))
+    dispatch(L.loginAction({ email, name, password }))
     navigation.navigate('TabNavigator')
   }, [email, password])
   const goSignUp = useCallback(() => navigation.navigate('SignUp'), [])

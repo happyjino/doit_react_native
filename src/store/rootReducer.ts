@@ -1,15 +1,12 @@
-import { AppState } from "./AppState";
-import type { LoginActions } from "./action";
+import { combineReducers } from 'redux'
+import * as L from './login'
+import * as C from './counter'
+import * as CL from './clock'
+import * as P from './people'
 
-const initialState: AppState = {
-  loggedIn: false,
-  loggedUser: { name: '', email: '', password: '' }
-}
-
-export const rootReducer = (state: AppState = initialState, action: LoginActions) => {
-  switch (action.type) {
-    case 'login': return { ...state, loggedUser: action.loggedUser, loggedIn: true }
-    case 'logout': return initialState
-  }
-  return state
-}
+export const rootReducer = combineReducers({
+  login: L.reducer,
+  counter: C.reducer,
+  clock: CL.reducer,
+  people: P.reducer
+})

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { SafeAreaView, View, Text, TextInput, TouchableView, UnderlineText } from '../theme'
 import * as D from '../data'
 import { useAutoFocus, AutoFocusProvider } from '../contexts';
-import { loginAction } from '../store'
+import * as L from '../store/login'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 
@@ -25,7 +25,7 @@ export default function SignUp() {
   const dispatch = useDispatch()
   const goTabNavigator = useCallback(() => {
     if (password === confirmPassword) {
-      dispatch(loginAction({name, email, password}))
+      dispatch(L.loginAction({name, email, password}))
       navigation.navigate('TabNavigator')
     }
     else Alert.alert('password is invalid')
