@@ -25,7 +25,8 @@ export default function SignUp() {
   const dispatch = useDispatch()
   const goTabNavigator = useCallback(() => {
     if (password === confirmPassword) {
-      dispatch(L.loginAction({name, email, password}))
+      console.log("회원")
+      dispatch(L.signUpAction({name, email, password}))
       navigation.navigate('TabNavigator')
     }
     else Alert.alert('password is invalid')

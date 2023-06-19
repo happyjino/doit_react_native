@@ -1,11 +1,13 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView, View, Text, TextInput, TouchableView, UnderlineText } from '../theme'
 import * as D from '../data'
 import { useAutoFocus, AutoFocusProvider } from '../contexts';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppState } from '../store'
 import * as L from '../store/login'
+import * as U from '../utils'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 
@@ -15,9 +17,11 @@ export type RootStackParamList = {
 }
 
 export default function Login() {
-  const [email, setEmail] = useState<string>(D.randomEmail())
-  const [name, setName] = useState<string>(D.randomName())
-  const [password, setPassword] = useState<string>(D.random(10000, 1000000).toString())
+  const { loggedIn } = useSelector<AppState, L.State>(({ login }) => login)
+
+  const [email, setEmail] = useState<string>('')
+  const [name, setName] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   
   const focus = useAutoFocus()
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
@@ -27,6 +31,19 @@ export default function Login() {
     navigation.navigate('TabNavigator')
   }, [email, password])
   const goSignUp = useCallback(() => navigation.navigate('SignUp'), [])
+
+  useEffect(() => {
+    U.readFromStorage(L.loggedUserKey)
+      .then((value) => {
+        if (value.length > 0) {
+          const savedUser = JSON.parse(value)
+          setEmail(savedUser.email)
+          setName(savedUser.name)
+          setPassword(savedUser.password)
+        }
+      })
+      .catch((e) => {})
+  }, [loggedIn])
 
   return (
     <SafeAreaView>

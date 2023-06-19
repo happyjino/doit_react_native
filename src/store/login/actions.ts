@@ -1,4 +1,6 @@
+import type { Dispatch, Action } from 'redux'
 import type * as T from './types'
+import * as U from '../../utils'
 
 export const loginAction = (loggedUser: T.User): T.LoginAction => ({
   type: 'login',
@@ -8,3 +10,15 @@ export const loginAction = (loggedUser: T.User): T.LoginAction => ({
 export const logoutAction = (): T.LogoutAction => ({
   type: 'logout'
 })
+
+export const loggedUserKey = 'loggedUser'
+
+export const signUpAction = (loggedUser: T.User) => (dispatch: Dispatch) => {
+  U.writeToStorage(loggedUserKey, JSON.stringify(loggedUser))
+    .then(() => {
+      dispatch(loginAction(loggedUser))
+    })
+    .catch((e) => {
+      dispatch(loginAction(loggedUser))
+    })
+}
